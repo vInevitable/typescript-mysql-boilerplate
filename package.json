@@ -1,0 +1,74 @@
+{
+  "name": "typescript-mysql-boilerplate",
+  "version": "1.0.0",
+  "description": "Nodejs-typscript-mysql-boilerplate",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
+    "dev": "nodemon --watch src --exec ts-node -r tsconfig-paths/register src/index.ts",
+    "start": "node -r tsconfig-paths/register dist/index.js",
+    "prod": "npm run build && npm run start",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://abdulkalam1233@github.com/vInevitable/typescript-mysql-boilerplate.git"
+  },
+  "keywords": [
+    "boilerplate",
+    "nodejs",
+    "typescript",
+    "mysql"
+  ],
+  "author": "vinevitable",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vInevitable/typescript-mysql-boilerplate/issues"
+  },
+  "homepage": "https://github.com/vInevitable/typescript-mysql-boilerplate#readme",
+  "dependencies": {
+    "@hapi/joi-date": "~2.0.1",
+    "axios": "^0.21.1",
+    "bcrypt": "~5.0.0",
+    "cors": "~2.8.5",
+    "dotenv": "~8.2.0",
+    "express": "~4.17.1",
+    "joi": "~17.3.0",
+    "jsonwebtoken": "~8.5.1",
+    "lodash": "~4.17.20",
+    "luxon": "^1.25.0",
+    "morgan": "~1.10.0",
+    "mysql2": "~2.2.5",
+    "nodemailer": "~6.4.16",
+    "swagger-ui-express": "4.1.4",
+    "tsconfig-paths": "~3.9.0",
+    "tscpaths": "0.0.9",
+    "tslint": "~5.20.1",
+    "winston": "~3.3.3",
+    "winston-daily-rotate-file": "~4.5.0",
+    "yamljs": "0.3.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "~3.0.0",
+    "@types/cors": "~2.8.8",
+    "@types/express": "~4.17.9",
+    "@types/handlebars": "~4.1.0",
+    "@types/jest": "^26.0.20",
+    "@types/joi": "~14.3.4",
+    "@types/jsonwebtoken": "~8.5.0",
+    "@types/lodash": "~4.14.165",
+    "@types/luxon": "^1.25.0",
+    "@types/morgan": "~1.9.2",
+    "@types/mysql2": "github:types/mysql2",
+    "@types/node": "~14.14.7",
+    "@types/nodemailer": "~6.4.0",
+    "@types/swagger-ui-express": "~4.1.2",
+    "@types/winston": "~2.4.4",
+    "@types/yamljs": "~0.2.31",
+    "jest": "^26.6.3",
+    "nodemon": "~2.0.6",
+    "ts-jest": "^26.4.4",
+    "ts-node": "~9.0.0",
+    "typescript": "~4.0.5"
+  }
+}

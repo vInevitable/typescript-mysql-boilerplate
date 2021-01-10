@@ -1,0 +1,66 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "resolveJsonModule": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": false,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "src/*": [
+        "src/*"
+      ],
+      "config": [
+        "src/config_loader"
+      ],
+      "constants/*": [
+        "src/constants/*"
+      ],
+      "controllers/*": [
+        "src/controllers/*"
+      ],
+      "data_stores/*": [
+        "src/data_stores/*"
+      ],
+      "helpers/*": [
+        "src/helpers/*"
+      ],
+      "loaders/*": [
+        "src/loaders/*"
+      ],
+      "loaders": [
+        "src/loaders"
+      ],
+      "logger": [
+        "src/logger"
+      ],
+      "middlewares/*": [
+        "src/middlewares/*"
+      ],
+      "models": [
+        "src/models"
+      ],
+      "routes": [
+        "src/routes"
+      ],
+      "services/*": [
+        "src/services/*"
+      ],
+      "utils/*": [
+        "src/utils/*"
+      ],
+      "validations/*": [
+        "src/validations/*"
+      ],
+    },
+    "rootDirs": [
+      "src"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "node_modules/handlebars/types/index.d.ts"
+  ]
+}

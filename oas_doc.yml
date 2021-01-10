@@ -1,0 +1,288 @@
+openapi: '3.0.3'
+info:
+  title: I Bill
+  description: "boilarplate"
+  version: '0.0.1'
+servers:
+  - url: https://www.boilarplate.com/v1
+    description: Production server
+  - url: https://qa.boilarplate.com/v1
+    description: QA server
+  - url: http://boilarplate.com/api/v1
+    description: DEV server
+tags:
+
+paths:
+components:
+  schemas:
+    Phone:
+      type: object
+      properties:
+        phoneCountryCode:
+          type: string
+          description: The country code prefix for phone number
+          minLength: 3
+          maxLength: 3
+          example: '+91'
+        phoneNumber:
+          description: The phone number without spaces or dash.
+          type: string
+          pattern: '[0-9]{10}'
+          minLength: 10
+          maxLength: 10
+          example: '9845617890'
+    BooleanFlag:
+      type: string
+      enum:
+        - 'true'
+        - 'false'
+      default: true
+    RecordId:
+      type: string
+      pattern: '[a-z0-9]{0,20}'
+      minLength: 0
+      maxLength: 20
+      description: The unique identifier assigned by the system to the resource record.
+      example: '30'
+    RecordId_Object:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/RecordId"
+    MasterData_Record:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: '[a-z0-9]{0,20}'
+          minLength: 0
+          maxLength: 20
+          description: The unique identifier assigned by the system to the Master data record.
+          example: '120'
+        name:
+          type: string
+          pattern: '[0-9a-zA-Z ,.-]+'
+          minLength: 0
+          maxLength: 50
+          description: The display name of Master data record.
+        description:
+          type: string
+          minLength: 0
+          maxLength: 256
+          description: A brief description of the master data record.
+    BaseListResponse:
+      type: object
+      properties:
+        totalResultsCount:
+          type: string
+          description: The total number of records available matching the search criteria.
+          example: '109'
+        list:
+          type: array
+          description: 'The list of objects macthing the query and withing the provided indices'
+          items:
+            type: object
+    BasePaginatedListResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseListResponse'
+        - type: object
+          properties:
+            hasMoreResults:
+              type: string
+              enum:
+                - 'true'
+                - 'false'
+              description: true if there are more results.
+            url:
+              type: string
+              description: 'TBD:This URL fetches the set of Client POCs with the provided matching criteria, based on offset and limit parameters.'
+              example: /clients/{CLIENT_ID}/pocs?queryId=cakbhjaksgasdfauw61r27
+            fromIndex:
+              type: string
+              pattern: '[0-9]+'
+              minLength: 1
+              maxLength: 10
+              example: '1'
+              description: The index of first item in the returned results set, as per the whole list of results.
+            toIndex:
+              type: string
+              pattern: '[0-9]+'
+              minLength: 1
+              maxLength: 10
+              example: '10'
+              description: The index of last item in the returned results set, as per the whole list of results.
+            queryId:
+              $ref: '#/components/schemas/QueryId'
+            sortBy:
+              $ref: '#/components/schemas/SortByCommon'
+            sortOrder:
+              $ref: '#/components/schemas/SortOrder'
+            queryDetails:
+              type: object
+              additionalProperties: true
+              description: 'The actual query details like search text, filters etc'
+    Country:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: '[a-z0-9]{0,20}'
+          minLength: 0
+          maxLength: 20
+          description: The unique identifier assigned by the system to the Country.
+          example: '13893720'
+        code:
+          type: string
+          pattern: '[a-zA-Z]{3}'
+          minLength: 3
+          maxLength: 3
+          description: The 3 digit ISO country code.
+          example: IND
+        name:
+          type: string
+          pattern: '[0-9a-zA-Z ,.-]+'
+          minLength: 0
+          maxLength: 50
+          example: India
+    State:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: '[a-z0-9]{0,20}'
+          minLength: 0
+          maxLength: 20
+          description: The unique identifier assigned by the system to the State of a Country.
+          example: '93893720'
+        code:
+          type: string
+          pattern: '[a-zA-Z]{5}'
+          minLength: 0
+          maxLength: 5
+          description: The optional state code if applicable.
+          example: TG
+        name:
+          type: string
+          pattern: '[0-9a-zA-Z ,.-]+'
+          minLength: 0
+          maxLength: 50
+          description: The name of state/territory in the country.
+          example: Telangana
+    City:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: '[a-z0-9]{0,20}'
+          minLength: 0
+          maxLength: 20
+          description: The unique identifier assigned by the system to the City.
+          example: '93893720'
+        name:
+          type: string
+          pattern: '[0-9a-zA-Z ,.-]+'
+          minLength: 0
+          maxLength: 50
+          example: Hyderabad
+    Address:
+      type: object
+      required:
+        - addressLine1
+        - country
+      properties:
+        addressLine1:
+          type: string
+          pattern: '[0-9a-zA-Z #,.''&/\-@!$%*()_+={}|:;`\[\]\^\~\\"]+'
+          minLength: 0
+          maxLength: 100
+          example: Cyber Towers
+        addressLine2:
+          type: string
+          pattern: '[0-9a-zA-Z #,.''&/\-@!$%*()_+={}|:;`\[\]\^\~\\"]+'
+          minLength: 0
+          maxLength: 100
+          example: sy numbers 10 to 23, Madhapur
+        city:
+          description: 'The city object containing the id of City.'
+          allOf:
+            - $ref: '#/components/schemas/RecordId_Object'
+        state:
+          description: 'The city object containing the id of State.'
+          allOf:
+            - $ref: '#/components/schemas/RecordId_Object'
+        country:
+          description: 'The city object containing the id of Country.'
+          allOf:
+            - $ref: '#/components/schemas/RecordId_Object'
+        postalCode:
+          type: string
+          pattern: '[a-zA-Z\d-]{0,20}'
+          minLength: 0
+          maxLength: 20
+          description: The  postal code used by the country of address.
+          example: 500082
+    Address_Recorded:
+      allOf:
+        - $ref: '#/components/schemas/Address'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              pattern: '[a-z0-9]{0,20}'
+              minLength: 0
+              maxLength: 20
+              description: The unique identifier assigned by the system to the address.
+              example: '13893720'
+            city:
+              $ref: '#/components/schemas/City'
+            state:
+              $ref: '#/components/schemas/State'
+            country:
+              $ref: '#/components/schemas/Country'
+  responses:
+    BadRequest:
+      description: The request has invalid values and hence a Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Deleted:
+      description: Successfully Deleted the specified Resource
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: http://devapi.oauth2.io/oauth/dialog
+          scopes:
+            write:admin: modify anything
+            read:employee: manage invoices only
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
+  examples:
+    client-example:
+      description: example of client object
