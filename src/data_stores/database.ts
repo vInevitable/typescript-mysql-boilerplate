@@ -23,7 +23,7 @@ export const sqlConnection = async () => {
             waitForConnections: true,
             queueLimit: 0,
             dateStrings: ['DATE'],
-            queryFormat: (query: string, values: any) => {
+            queryFormat: (query, values) => {
                 if (!values) {
                     return query;
                 }
